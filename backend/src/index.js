@@ -8,20 +8,6 @@ import cors from "cors";
 import { app, server } from "./lib/socket.js";
 import rateLimit from "express-rate-limit";
 
-// Limit: 150 requests per 15 minutes per IP
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 min
-  max: 150,
-  message: "Too many requests from this IP, please try again later.",
-  standardHeaders: true,
-  legacyHeaders: false,
-
-  skip: (req) => req.ip === "46.117.75.91",
-});
-
-// Apply to all routes
-app.use(limiter);
-
 import path from "path";
 
 dotenv.config();
