@@ -1,0 +1,9 @@
+{
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.validate": ["javascript", "javascriptreact"],
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "javascript.validate.enable": false // ← disable built-in JS validation
+}
