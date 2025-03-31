@@ -20,7 +20,6 @@ const ChatContainer = () => {
 
   useEffect(() => {
     getMessages(selectedUser._id);
-
     subscribeToMessages();
 
     return () => unsubscribeFromMessages();
@@ -44,12 +43,16 @@ const ChatContainer = () => {
       </div>
     );
   }
+
   return (
-    <div className="flex-1 flex flex-col ">
+    <div className="flex-1 flex flex-col h-full min-h-0 overflow-hidden">
+      {/* Header (remains fixed when keyboard opens) */}
       <div className="shrink-0 px-4 pt-4">
         <ChatHeader />
       </div>
-      <div className="flex-1 overflow-y-auto px-4 space-y-4">
+
+      {/* Scrollable messages */}
+      <div className="flex-1 overflow-y-auto px-4 space-y-4 min-h-0">
         {messages.map((message) => (
           <div
             key={message._id}
@@ -80,7 +83,8 @@ const ChatContainer = () => {
                 })}
               </time>
             </div>
-            <div className="chat-bubble flex flex-col justify-between break-words max-w-[75%] ">
+
+            <div className="chat-bubble flex flex-col justify-between break-words max-w-[75%]">
               {message.image && (
                 <img
                   src={message.image}
@@ -88,11 +92,13 @@ const ChatContainer = () => {
                   className="sm:max-w-[200px] rounded-md mb-2"
                 />
               )}
-              {message.text && <p className="">{message.text}</p>}
+              {message.text && <p>{message.text}</p>}
             </div>
           </div>
         ))}
       </div>
+
+      {/* Message input at the bottom */}
       <div className="shrink-0 px-4 pb-4">
         <MessageInput />
       </div>
