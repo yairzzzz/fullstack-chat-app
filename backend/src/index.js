@@ -6,6 +6,19 @@ import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { app, server } from "./lib/socket.js";
+import rateLimit from "express-rate-limit";
+
+// Limit: 100 requests per 15 minutes per IP
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  max: 50,
+  message: "Too many requests from this IP, please try again later.",
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Apply to all routes
+app.use(limiter);
 
 import path from "path";
 
