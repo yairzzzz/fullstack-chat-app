@@ -8,7 +8,7 @@ import cors from "cors";
 import { app, server } from "./lib/socket.js";
 import rateLimit from "express-rate-limit";
 
-// Limit: 100 requests per 15 minutes per IP
+// Limit: 150 requests per 15 minutes per IP
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 min
   max: 150,
