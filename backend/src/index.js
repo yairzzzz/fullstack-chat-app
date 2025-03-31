@@ -6,6 +6,7 @@ import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { app, server } from "./lib/socket.js";
+import rateLimit from "express-rate-limit";
 
 app.set("trust proxy", true);
 
@@ -15,11 +16,20 @@ dotenv.config();
 const PORT = process.env.PORT;
 const __dirname = path.resolve();
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "FUCK YOU STOP SPAMMING",
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => req.ip === "46.117.75.91",
+});
+
 app.use((req, res, next) => {
   console.log("Client IP:", req.ip);
   next();
 });
-
+app.use(limiter);
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
